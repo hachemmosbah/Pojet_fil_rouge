@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: envent-bus
+  labels:
+    app: envent-bus
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: envent-bus
+  template:
+    metadata:
+      labels:
+        app: envent-bus
+    spec:
+      containers:
+      - name: envent-bus
+        imagePullPolicy: Never
+        image: envent-bus
+        ports:
+        - containerPort: 4005
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: envent-bus
+spec:
+  type: NodePort
+  selector:
+    app: envent-bus
+  ports:
+  - protocol: TCP
+    port: 4005
+    targetPort: 80
