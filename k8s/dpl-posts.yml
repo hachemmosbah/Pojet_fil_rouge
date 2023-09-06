@@ -25,7 +25,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: posts
+  name: posts-clusterip-srv
 spec:
   type: NodePort
   selector:
@@ -33,4 +33,4 @@ spec:
   ports:
   - protocol: TCP
     port: 4000
-    targetPort: 80
+    targetPort: 4000

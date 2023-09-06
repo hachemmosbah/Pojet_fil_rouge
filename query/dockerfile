@@ -9,3 +9,6 @@ COPY . .
 
 # install app dependencies
 RUN npm install
+
+# start app
+CMD ["npm", "start"]

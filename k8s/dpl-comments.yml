@@ -25,7 +25,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: comments
+  name: comments-srv
 spec:
   type: NodePort
   selector:
@@ -33,4 +33,4 @@ spec:
   ports:
   - protocol: TCP
     port: 4001
-    targetPort: 80
+    targetPort: 4001
