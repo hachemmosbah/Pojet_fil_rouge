@@ -8,12 +8,12 @@ Ce projet est une application microservices construite avec Node.js et React. Il
 
 - [Introduction](#introduction)
 - [Table des matières](#table-des-matières)
-- [Github](#Github)
-- [Installation](#Installation)
+- [Github](#github)
+- [Installation](#installation)
 - [Test](#Test)
-- [Affichage-web](#Affichage-web)
+- [Affichage-web](#affichage-web)
 
-## Github :
+## Github
 ### Fork :
 Faite un fork du projet dans votre repertoire github.
 
@@ -23,7 +23,7 @@ git clone https://github.com/hachemmosbah/Pojet_fil_rouge.git
 
 ```
 
-## Installation :
+## Installation
 
 1. Builder les images Docker
 
@@ -61,7 +61,7 @@ Cette méthode fait en sorte de crée les dockerfile ainsi que le deploiment et 
 bash command.sh
 ```
 
-## Test : 
+## Test 
 Pour tester que les pods sont en marche ainsi que les deploiements et les services lancer les testes suivants:
 
 1. Pods
