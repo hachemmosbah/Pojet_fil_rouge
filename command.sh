@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 sudo docker build -t clients ./clien
 sudo docker build -t comments ./comment
 sudo docker build -t query ./query
