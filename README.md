@@ -8,99 +8,91 @@ Ce projet est une application microservices construite avec Node.js et React. Il
 
 - [Introduction](#introduction)
 - [Table des matières](#table-des-matières)
-- [Architecture](#architecture)
-- [Chemins d'Ingress](#chemins-dingress)
-- [Noms de Services Kubernetes](#noms-de-services-kubernetes)
-- [Ports des Services](#ports-des-services)
-- [Prérequis](#prérequis)
-- [Installation](#installation)
-- [Déploiement](#déploiement)
+- [Github](#Github)
+- [Installation](#Installation)
+- [Test](#Test)
+- [Affichage-web](#Affichage-web)
 
-## Architecture
-
-L'application est composée des services suivants :
-
-- **Client** : Interface utilisateur construite avec React.
-- **Posts** : Service pour la gestion des posts.
-- **Comments** : Service pour la gestion des commentaires.
-- **Query** : Service pour la gestion des requêtes.
-- **Moderation** : Service pour la modération des commentaires.
-- **Event Bus** : Service pour la gestion des événements entre les services.
-
-### Chemins d'Ingress
-
-- `/posts/create` : Dirigé vers le service `posts-clusterip-srv` sur le port 4000.
-  - Utilisé pour créer de nouveaux posts.
-  
-- `/posts` : Dirigé vers le service `query-srv` sur le port 4002.
-  - Utilisé pour récupérer la liste des posts existants.
-  
-- `/posts/?(.*)/comments` : Dirigé vers le service `comments-srv` sur le port 4001.
-  - Utilisé pour créer ou récupérer les commentaires associés à un post spécifique.
-  
-- `/?(.*)` : Dirigé vers le service `client-srv` sur le port 3000.
-  - Utilisé pour accéder à l'interface utilisateur.
- 
-
-
-### Noms de Services Kubernetes
-
-Assurez-vous que les noms de services dans vos fichiers de déploiement Kubernetes correspondent aux noms de services utilisés dans le code de l'application. Voici les noms de services attendus :
-
-- **client-srv**: Service pour l'interface utilisateur.
-- **posts-clusterip-srv**: Service pour la gestion des posts.
-- **query-srv**: Service pour la gestion des requêtes.
-- **comments-srv**: Service pour la gestion des commentaires.
-- **moderation-srv**: Service pour la modération des commentaires.
-- **event-bus-srv**: Service pour la gestion des événements entre les services.
-
-Si vous modifiez ces noms, assurez-vous également de mettre à jour les références correspondantes dans le code de l'application.
-
-
-### Ports des Services
-
-Chaque service écoute sur un port spécifique. Assurez-vous que ces ports sont correctement configurés dans vos fichiers de déploiement Kubernetes et dans tout autre outil de gestion des conteneurs que vous pourriez utiliser. Voici les ports attendus pour chaque service :
-
-- **client-srv**: Écoute sur le port 3000.
-- **posts-clusterip-srv**: Écoute sur le port 4000.
-- **query-srv**: Écoute sur le port 4002.
-- **comments-srv**: Écoute sur le port 4001.
-- **moderation-srv**: Écoute sur le port 4003.
-- **event-bus-srv**: Écoute sur le port 4005.
-
-Si vous modifiez ces ports, assurez-vous également de mettre à jour les références correspondantes dans le code de l'application et les fichiers de configuration Kubernetes.
-
-
-## Prérequis
-
-- Node.js
-- Docker
-- Kubernetes
-
-## Installation
+## Github :
+### Fork :
+Faite un fork du projet dans votre repertoire github.
 
 1. Clonez ce dépôt :
-    ```bash
-    git clone https://github.com/Mossbaddi/Pojet_fil_rouge.git
-    ```
+```bash
+git clone https://github.com/hachemmosbah/Pojet_fil_rouge.git
 
-2. Installez les dépendances pour chaque service :
-    ```bash
-    cd client && npm install
-    cd ../posts && npm install
-    # Répétez pour tous les services
-    ```
+```
 
-## Déploiement
+## Installation :
 
-1. Construisez les images Docker pour chaque service :
-    ```bash
-    docker build -t client ./client
-    docker build -t posts ./posts
-    # Répétez pour tous les services
-    ```
+1. Builder les images Docker
 
-2. Déployez les services sur Kubernetes :
-    ```bash
-    kubectl apply -f k8s/
-    ```
+```bash
+- sudo docker build -t clients ./client
+
+- sudo docker build -t comments ./comments
+
+- sudo docker build -t query ./query 
+
+- sudo docker build -t event-bus ./event-bus
+
+- sudo docker build -t moderation ./moderation 
+
+- sudo docker build -t posts ./posts
+```
+2. deployement:
+
+Pour deployer avec kubernetes :
+```bash
+- kubectl apply -f dpl-clients.yml
+- kubectl apply -f dpl-comments.yml
+- kubectl apply -f dpl-envent-bus.yml
+- kubectl apply -f dpl-moderation.yml
+- kubectl apply -f dpl-posts.yml
+- kubectl apply -f dpl-query.yml
+- kubectl apply -f ingress-srv.yml
+``` 
+
+ Autre méthode:
+
+Cette méthode fait en sorte de crée les dockerfile ainsi que le deploiment et l'ingress
+
+```bash
+bash command.sh
+```
+
+## Test : 
+Pour tester que les pods sont en marche ainsi que les deploiements et les services lancer les testes suivants:
+
+1. Pods
+```bash
+kubectl get pods
+```
+On verra que tous les pods sont bien **Running**
+![image](images/pods.png)
+
+2. deployments
+```bash
+kubectl get deployments
+```
+On verra que le deployement 
+![image](images/deployments.png)
+
+3. services
+```bash
+kubectl get svc
+```
+On verra que les services
+![image](images/services.png)
+
+4. logs
+```bash
+kubectl logs <name_pods>
+```
+Pour voir si nos logs n'affiche pas d'erreurs
+
+## Affichage web
+Ouvrez une page web et entrez dans la barre d'addresse l'url suivant :
+```url
+http://localhost/?(.*)
+```
